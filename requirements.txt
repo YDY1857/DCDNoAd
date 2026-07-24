@@ -1,0 +1,6 @@
+# 依赖说明
+# 本工具包仅使用 Python 3.8+ 标准库（os/re/json/shutil/plistlib/argparse/struct/pathlib），
+# 无需 pip install 任何第三方包。Windows / macOS / Linux 均可直接运行。
+#
+# 若需在隔离环境中运行（可选）：
+#   python -m venv venv && venv\Scripts\activate && python ad_remover.py --help

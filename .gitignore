@@ -1,0 +1,12 @@
+# 备份与生成产物（不纳入版本库）
+_ad_remover_backup/
+report/
+*.bak
+__pycache__/
+*.pyc
+
+# 编译产物（由 macOS / GitHub Actions 生成，勿纳入版本库）
+*.dylib
+dylib_src/adblock/adblock.dylib
+dylib_src/adblock/adblock_domains.h
+
