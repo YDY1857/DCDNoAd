@@ -1,0 +1,26 @@
+name: Build adblock.dylib
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build iOS dylib (arm64)
+        run: |
+          cd dylib_src/adblock
+          make
+          echo "=== built ===" && ls -l adblock.dylib && file adblock.dylib
+
+      - name: Upload dylib artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: adblock.dylib
+          path: dylib_src/adblock/adblock.dylib
+          if-no-files-found: error
