@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "app_name": "懂车帝 (Dongchedi)",
+    "app_bundle_id": "com.ss.ios.auto",
+    "app_version": "9.1.6",
+    "analysis_date": "2026-07-24",
+    "notes": "广告特征签名库。**ad_endpoints 是广告域名拦截清单的唯一真源**，路线 A（二进制等长替换）与路线 B（dylib 注入网络层拦截）共用；改名单只需编辑此处，重新编译/重跑工具即可生效。所有条目均可自由增删。",
+    "replacement_policy": "二进制域名替换使用等长（按字节）替换，超出原长度的部分以 NULL 字节填充，保证 Mach-O 字符串段仍被正确 NULL 结尾，且不改变文件偏移。"
+  },
+
+  "ad_resource_filename_patterns": [
+    "^ad_.*\\.(json|webp|png|gif|mp4|js|html)$",
+    ".*ad(_|-| ).*(banner|feed|splash|reward|interstitial|native|wipe|shake).*\\.(json|webp|png)$"
+  ],
+
+  "ad_bundle_names": [
+    "BDADetailSDKResource.bundle",
+    "BDAComponentsSDKResource.bundle",
+    "ADFeelGood.bundle",
+    "BDAlogProtocol.bundle"
+  ],
+
+  "ad_frameworks_names": [],
+
+  "ad_string_fragments": [
+    "SplashAdId",
+    "AdInfo",
+    "AdView",
+    "AdWebView",
+    "Advertisement",
+    "AdRequest",
+    "AdFeedbackView",
+    "showAd",
+    "loadAd",
+    "loaderAd",
+    "loadControlAd",
+    "loadAppAd",
+    "adDidLoad",
+    "AdConfig",
+    "PangleSchemeParams",
+    "PangleBannerAdvertisementPlugin",
+    "ABUIUserAuditInfoModel"
+  ],
+
+  "third_party_platforms": {
+    "pangle_csj": {
+      "name": "穿山甲 / Pangle (ByteDance 聚合广告 SDK)",
+      "identifiers": ["ABU", "CSJ", "Pangle", "BUAd", "BUNative", "BDADetailSDK", "BDAComponentsSDK"],
+      "note": "字节跳动旗下广告平台，ABU 为聚合层，CSJ(穿山甲) 为具体广告源。"
+    },
+    "oceanengine": {
+      "name": "巨量引擎 (OceanEngine)",
+      "identifiers": ["oceanengine.com", "ad.oceanengine.com"],
+      "note": "字节跳动广告投放平台，承载广告请求与渲染配置。"
+    },
+    "tiktok_ads": {
+      "name": "TikTok Ads",
+      "identifiers": ["ads.tiktok.com"],
+      "note": "海外广告投放端点。"
+    },
+    "zijie_internal_ad": {
+      "name": "字节内部广告服务 (zijieapi)",
+      "identifiers": ["ad.zijieapi.com", "log.zijieapi.com"],
+      "note": "懂车帝/今日头条共用的内部广告与日志端点。"
+    },
+    "snssdk_ad": {
+      "name": "snssdk 广告/埋点域",
+      "identifiers": ["ading.snssdk.com", "snssdk.com"],
+      "note": "字节系通用域名，含广告与埋点流量。"
+    }
+  },
+
+  "ad_endpoints": [
+    "ad.zijieapi.com",
+    "log.zijieapi.com",
+    "ad.oceanengine.com",
+    "ads.tiktok.com",
+    "csjsd.com",
+    "ading.snssdk.com",
+    "adisoffshore.com",
+    "adisglobal.com"
+  ],
+
+  "tracking_endpoints": [
+    "snssdk.com",
+    "pstatp.com",
+    "log.zijieapi.com",
+    "log.snssdk.com",
+    "toutiao.com",
+    "pstatp.com"
+  ],
+
+  "plist_ad_url_schemes_to_flag": [
+    "auto.snssdk.com",
+    "snssdk36",
+    "pay-dcar.snssdk.com"
+  ],
+  "plist_queries_schemes_ad_related": [
+    "snssdk32",
+    "snssdk6575",
+    "snssdk35",
+    "snssdk141",
+    "snssdk1112",
+    "snssdk1128",
+    "snssdk1165",
+    "snssdk51"
+  ]
+}
