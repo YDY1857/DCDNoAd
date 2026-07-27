@@ -1,7 +1,7 @@
 // adblock.m — 懂车帝去广告注入库（非越狱重签名注入路线）
 //
 // 原理：作为 dylib 注入 App 主二进制后，在 +load/构造函数中对
-// NSURLSession / NSURLConnection 的类方法进行 method swizzling，
+// NSURLSession / NSURLConnection 的实例方法进行 method swizzling，
 // 在请求发出前把广告域名（与 signatures/ad_signatures.json 的 ad_endpoints 一致）重定向到
 // http://0.0.0.0/，使广告请求快速失败、广告无法加载。
 //
@@ -36,10 +36,19 @@ static BOOL isAdHost(NSString *host) {
     return NO;
 }
 
+static BOOL isAdURL(NSURL *url) {
+    if (isAdHost(url.host)) return YES;
+    NSString *path = url.path.lowercaseString;
+    return [path hasPrefix:@"/motor/ad/api/splash"] ||
+           [path hasPrefix:@"/motor/ad/api/realtime/splash"] ||
+           [path containsString:@"/api/ad/splash/"] ||
+           [path containsString:@"/api/ad/v1/splash/stock/"];
+}
+
 // 把广告请求重定向到 0.0.0.0，使其连接被拒、快速失败（与二进制补丁策略一致）
 static NSURLRequest *rewriteIfAd(NSURLRequest *req) {
     NSURL *url = req.URL;
-    if (url && isAdHost(url.host)) {
+    if (url && isAdURL(url)) {
         NSURL *blocked = [NSURL URLWithString:@"http://0.0.0.0/"];
         NSMutableURLRequest *m = [req mutableCopy];
         m.URL = blocked;
@@ -48,26 +57,26 @@ static NSURLRequest *rewriteIfAd(NSURLRequest *req) {
     return req;
 }
 
-static void swizzle_class_method(Class cls, SEL orig, SEL repl) {
+static void swizzle_instance_method(Class cls, SEL orig, SEL repl) {
     if (!cls) return;
-    Method m1 = class_getClassMethod(cls, orig);
-    Method m2 = class_getClassMethod(cls, repl);
+    Method m1 = class_getInstanceMethod(cls, orig);
+    Method m2 = class_getInstanceMethod(cls, repl);
     if (m1 && m2) method_exchangeImplementations(m1, m2);
 }
 
-// === NSURLSession 交换实现（类方法）===
+// === NSURLSession 交换实现（实例方法）===
 @interface NSURLSession (AdBlock)
-+ (id)adblock_dataTaskWithRequest:(NSURLRequest *)req;
-+ (id)adblock_dataTaskWithRequest:(NSURLRequest *)req
+- (id)adblock_dataTaskWithRequest:(NSURLRequest *)req;
+- (id)adblock_dataTaskWithRequest:(NSURLRequest *)req
                  completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))h;
 @end
 
 @implementation NSURLSession (AdBlock)
-+ (id)adblock_dataTaskWithRequest:(NSURLRequest *)req {
+- (id)adblock_dataTaskWithRequest:(NSURLRequest *)req {
     // 交换后，此处 self 调用 adblock_dataTaskWithRequest: 实际指向原始实现
     return [self adblock_dataTaskWithRequest:rewriteIfAd(req)];
 }
-+ (id)adblock_dataTaskWithRequest:(NSURLRequest *)req
+- (id)adblock_dataTaskWithRequest:(NSURLRequest *)req
                  completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))h {
     return [self adblock_dataTaskWithRequest:rewriteIfAd(req) completionHandler:h];
 }
@@ -85,17 +94,15 @@ static void swizzle_class_method(Class cls, SEL orig, SEL repl) {
 @end
 
 __attribute__((constructor)) static void adblock_init(void) {
-    swizzle_class_method(objc_getClass("NSURLSession"),
+    swizzle_instance_method(objc_getClass("NSURLSession"),
                   @selector(dataTaskWithRequest:),
                   @selector(adblock_dataTaskWithRequest:));
-    swizzle_class_method(objc_getClass("NSURLSession"),
+    swizzle_instance_method(objc_getClass("NSURLSession"),
                   @selector(dataTaskWithRequest:completionHandler:),
                   @selector(adblock_dataTaskWithRequest:completionHandler:));
 
     Class connCls = objc_getClass("NSURLConnection");
-    if (connCls) {
-        Method m1 = class_getInstanceMethod(connCls, @selector(initWithRequest:delegate:));
-        Method m2 = class_getInstanceMethod(connCls, @selector(adblock_initWithRequest:delegate:));
-        if (m1 && m2) method_exchangeImplementations(m1, m2);
-    }
+    swizzle_instance_method(connCls,
+                  @selector(initWithRequest:delegate:),
+                  @selector(adblock_initWithRequest:delegate:));
 }
