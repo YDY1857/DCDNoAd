@@ -18,7 +18,7 @@ adblock_domains.h: generate_domains.py ../../signatures/ad_signatures.json
 	$(PY) generate_domains.py
 
 adblock.dylib: adblock.m adblock_domains.h
-	$(CC) $(CFLAGS) adblock.m -o adblock.dylib
+	$(CC) $(CFLAGS) adblock.m -framework Foundation -framework UIKit -o adblock.dylib
 
 clean:
 	rm -f adblock.dylib adblock_domains.h
