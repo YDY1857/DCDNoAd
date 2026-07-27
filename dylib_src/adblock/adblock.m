@@ -85,10 +85,10 @@ static void swizzle_class_method(Class cls, SEL orig, SEL repl) {
 @end
 
 __attribute__((constructor)) static void adblock_init(void) {
-    swizzle_class(objc_getClass("NSURLSession"),
+    swizzle_class_method(objc_getClass("NSURLSession"),
                   @selector(dataTaskWithRequest:),
                   @selector(adblock_dataTaskWithRequest:));
-    swizzle_class(objc_getClass("NSURLSession"),
+    swizzle_class_method(objc_getClass("NSURLSession"),
                   @selector(dataTaskWithRequest:completionHandler:),
                   @selector(adblock_dataTaskWithRequest:completionHandler:));
 
