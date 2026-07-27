@@ -4,6 +4,8 @@
 # 重要：广告域名清单的唯一真源是 ../../signatures/ad_signatures.json (ad_endpoints)。
 # 编译前由 generate_domains.py 自动生成 adblock_domains.h（请勿手改该头文件）。
 
+.DEFAULT_GOAL := adblock.dylib
+
 SDK := $(shell xcrun --sdk iphoneos --show-sdk-path)
 CC  := clang
 PY  := python3
