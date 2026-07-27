@@ -64,6 +64,17 @@ static void swizzle_instance_method(Class cls, SEL orig, SEL repl) {
     if (m1 && m2) method_exchangeImplementations(m1, m2);
 }
 
+static BOOL neverDisplaySplash(id self, SEL cmd) {
+    return YES;
+}
+
+static void blockCachedSplashModels(void) {
+    Class cls = objc_getClass("TTAdSplashModel");
+    if (!cls) return;
+    Method method = class_getInstanceMethod(cls, sel_registerName("splashNotDisplay"));
+    if (method) method_setImplementation(method, (IMP)neverDisplaySplash);
+}
+
 // === NSURLSession 交换实现（实例方法）===
 @interface NSURLSession (AdBlock)
 - (id)adblock_dataTaskWithRequest:(NSURLRequest *)req;
@@ -94,6 +105,8 @@ static void swizzle_instance_method(Class cls, SEL orig, SEL repl) {
 @end
 
 __attribute__((constructor)) static void adblock_init(void) {
+    blockCachedSplashModels();
+
     swizzle_instance_method(objc_getClass("NSURLSession"),
                   @selector(dataTaskWithRequest:),
                   @selector(adblock_dataTaskWithRequest:));
