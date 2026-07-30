@@ -27,7 +27,7 @@
 #include "adblock_domains.h"
 
 static NSString *const kWelcomeShownKey = @"com.iosguowuji.adblock.welcome-shown";
-static NSString *const kAvatarBase64 = @"/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQDAwMEBAQFBgoGBgUFBgwICQcKDgwPDg4MDQ0PERYTDxAVEQ0NExoTFRcYGRkZDxIbHRsYHRYYGRj/2wBDAQQEBAYFBgsGBgsYEA0QGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABAAEADASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAABQcEBgADCAL/xAA4EAABAwMBBQUECAcAAAAAAAABAgMEAAURIQYSMUFhBxNRcYEUIjKRFjNCUmKCodEIFUOSscHh/8QAGQEAAgMBAAAAAAAAAAAAAAAABAYCAwUH/8QALREAAQIFAgQFBAMAAAAAAAAAAQIDAAQFESExUQYSQWETcYGh8AcUIsEzgpH/2gAMAwEAAhEDEQA/AO/q0yZKIzW+vJJOEpHFR8BW6hk0k3NIPBDWR5k4/wBVNCeYxFRsIwzZqjlLbCB4Kyo/pUb+cTckFhsEaapV+9Rbjd4VrQPaFkuKGUtI1UevQUI+msZKtYbm74hwZ/xVTs9LMq5XCLwSzTpp9PO2k2iwi7zjjDLRJOMbqv3qSJs1JypDCx4JJSf1pUbSbfNXO5y4EO9OWe221hL86Q3j2l1avhZZByM8CTrjI010BJ7Z7m9NAQ5bojI0Sy4kvOEfiIPHyAqSZlC0F1KfwHXW/wA+YtC7PVhiQd8GYJCj+jY+lwR5g20MdAx5CJLW+gEY0KTxSfA1uqjbCbYsbSy32g3uSEshxe4DuKGcA68OPA+HSrzUG3UOp52zgxqS76H2w4g3BjKAbQXBi1B6dIPuoZGE51UreOAPOj9Kftcmut3a3QwSGu6Lp6qzgfLX51TOTRlmVODXpGvS5H76aQwTg6+QzACXdnpsxyVIXvOOHJ8B0HQVCXKKidcDnQlMgkcagzbolLZYaWCTopQ5dKQnXVKJUox1NmQAshAio360SX3rguPNWRLkGQUq0wcAAZHLQUDstqnRr2wJqEGKXE96WThwpzru50z51bJD+SaC3e4GDbSprWS+SxGSOJWRqrySDnzx41pUeaqDzqJCWUTzqGLA5Ppjv2jO4h4R4cXLKqFTlknwkn8rqBAFz0Ivk4Bvkx1R2bN7OfRmPL2XIXCktd53qtXFnODvk67w4Y5ctKvFJr+HyO9C2WlxHFHcSUqQDy0wT64Hypy10SqyqJSbWw2bpSceUcaoz4fk23Am1xoIykt29y1W1VmmpjuuIPeIdU38QToQQOZBzpzGadNLHtoaH0XjSTCVLSh0JcbSrCt0g6pP3gcY9RzoFAkybT/8Rwe18A+hsdt8QbMT01INmakzZxGRfI7gjYjG+2YQ7VyFyjl2FOEpofEGz7yeik8RUdbx5GhztitF4mF6w3BTU9Ovdg9xJR+X7XpmozqdsYqi04mFOKdN6SyUr9SnGahPfTh9yztLeS6g6XISffB87jyhsoX1kpy0clVaLStwOZJ/zI8rY3ggtwrKiVpQhAKlrUcBCRxUegoXZm0Xq8PbQTVFm2xWyGSsfVtA5KyPvKOuPEpFeU2TabaB1EW5ONtxVKBMSI3upXj73NVWGBAau9zYsNvUhVviLC5TyT7jrqeCc80I1JPAnyFalMpCODZR2qVAgvkWQkG9r99zpi9hfXonfUDj9HE3JTKYD4AN1Ei3OegA1sNc2zbGMujsJXPkIu06UhTLMkNlmOeDSE5CU+eCCTzJNOWlh2TqLj85xneTCDaER0kYykE5Weqic+WBTPpUoVSXUpX7tarlSlZ/sdO23aLmJBcg0iXc1AHpfNveMqm9o0WU/s0hyGEKcQ4MtuDKXBg5SfPprkCrlWmTGZlxlx5DYcbWMKSaKqcoqblXGEK5SoYOx6QQ2UBQ8QXT1G4jlK77PbP3p8Ny2jbpmfdTIO6M/gdGnzwahr2b24toDMW9F5kfAiewl/A6KOuPWn9eOzdUwqEd6K+2r7EpJSofmSCD8s1XB2S7TxMi0XxqAgnPdIkuKR/aW8Uk0ue4kpSi0G1W3SQQe/KTb5pAFR4Pp0yfFlHgm/RVx7gfr1MKVOye2V5Bi3K8qTGXouPBZDIWPBRTqR60ettnhxWRs/aQlaNEynmtUpSD9UkjiSfiI8vGr2rsn2wlp7u6bSolsni0JK20q8wlsZqz2Hs4RbghMt1hDSP6MUH3uhWcEDyAPWqK2riGuqDK0KAPVRAAHWwB+bQTQuHJGluCamHAtSdALnPS5IGm2neCWwls9is63ikJDhwnHMD/ALp6VbK8NtoabS22lKEJASlKRgADkK909UmnIp0o3KN6JHv194KmXy+6p1XWP//Z";
+static NSString *const kAvatarBase64 = @"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";
 
 @class GWWelcomeViewController;
 static GWWelcomeViewController *gWelcomeController;
@@ -255,11 +255,36 @@ static BOOL neverDisplaySplash(id self, SEL cmd) {
     return YES;
 }
 
-static void blockCachedSplashModels(void) {
-    Class cls = objc_getClass("TTAdSplashModel");
-    if (!cls) return;
-    Method method = class_getInstanceMethod(cls, sel_registerName("splashNotDisplay"));
-    if (method) method_setImplementation(method, (IMP)neverDisplaySplash);
+static BOOL neverAllowSplash(id self, SEL cmd) {
+    return NO;
+}
+
+static void replaceBoolGetter(const char *className, const char *selectorName, IMP implementation) {
+    Class cls = objc_getClass(className);
+    Method method = cls ? class_getInstanceMethod(cls, sel_registerName(selectorName)) : NULL;
+    if (method) method_setImplementation(method, implementation);
+}
+
+static void installSplashHooks(void) {
+    replaceBoolGetter("TTAdSplashModel", "splashNotDisplay", (IMP)neverDisplaySplash);
+    replaceBoolGetter("TTAdSplashModel", "isBidSplashCanShow", (IMP)neverAllowSplash);
+    replaceBoolGetter("BDASplashModelPicker", "shouldShowSplashAccordingToUDPAndPreloadData:", (IMP)neverAllowSplash);
+}
+
+static void scheduleSplashHooks(void) {
+    NSArray<NSNotificationName> *names = @[
+        UIApplicationWillFinishLaunchingNotification,
+        UIApplicationDidFinishLaunchingNotification,
+        UIApplicationDidBecomeActiveNotification,
+    ];
+    for (NSNotificationName name in names) {
+        [NSNotificationCenter.defaultCenter addObserverForName:name
+                                                        object:nil
+                                                         queue:NSOperationQueue.mainQueue
+                                                    usingBlock:^(NSNotification *note) {
+            installSplashHooks();
+        }];
+    }
 }
 
 // === NSURLSession 交换实现（实例方法）===
@@ -292,7 +317,8 @@ static void blockCachedSplashModels(void) {
 @end
 
 __attribute__((constructor)) static void adblock_init(void) {
-    blockCachedSplashModels();
+    installSplashHooks();
+    scheduleSplashHooks();
 
     swizzle_instance_method(objc_getClass("NSURLSession"),
                   @selector(dataTaskWithRequest:),
