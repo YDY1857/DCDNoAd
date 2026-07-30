@@ -201,7 +201,7 @@ static void scheduleWelcome(void) {
                                                 queue:NSOperationQueue.mainQueue
                                            usingBlock:^(NSNotification *note) {
             if (showWelcomeIfNeeded()) {
-                [center removeObserver:gWelcomeObserver];
+                [NSNotificationCenter.defaultCenter removeObserver:gWelcomeObserver];
                 gWelcomeObserver = nil;
             }
         }];
@@ -273,7 +273,6 @@ static void installSplashHooks(void) {
 
 static void scheduleSplashHooks(void) {
     NSArray<NSNotificationName> *names = @[
-        UIApplicationWillFinishLaunchingNotification,
         UIApplicationDidFinishLaunchingNotification,
         UIApplicationDidBecomeActiveNotification,
     ];
